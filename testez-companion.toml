@@ -1,0 +1,4 @@
+roots = ["ReplicatedStorage/TS"]
+
+[extraOptions]
+# Optionally, an extraOptions table can be passed to TestBootstrap
