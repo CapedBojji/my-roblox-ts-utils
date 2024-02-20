@@ -3,6 +3,13 @@ param(
     [string]$versionType # should be 'patch', 'minor', or 'major'
 )
 
+# Increment version, this will automatically create a new tag
+npm version $versionType --force -m "Upgrade to %s for release"
+
+# Commit the changes
+git add .
+git commit -m "Upgrade to $versionType for release"
+
 # Assuming the script is executed from the project root directory
 # Checkout to a new or existing 'release' branch
 git checkout -B release
@@ -22,9 +29,6 @@ Get-ChildItem -Path out/* | ForEach-Object {
 Get-ChildItem -Path src/*.d.ts -Recurse | ForEach-Object {
     Copy-Item $_.FullName $publishSrcDir -Force
 }
-
-# Increment version, this will automatically create a new tag
-npm version $versionType --force -m "Upgrade to %s for release"
 
 # Copy package.json to 'publish'
 Copy-Item package.json publish/ -Force
