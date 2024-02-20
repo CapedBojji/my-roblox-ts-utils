@@ -21,8 +21,10 @@ jobs:
     - name: Setup Environment
       run: |
         mkdir -p publish
-        if [ -d out ]; then mv out/* publish/; fi
-        find src -name "*.d.ts" -exec mv {} publish/ \;
+        mkdir -p publish/src
+        if [ -d out ]; then mv out/* publish/src; fi
+        find src -name "*.d.ts" -exec mv {} publish/src \;
+        mv package.json publish
 
     - name: Create Release Branch
       run: |
