@@ -36,6 +36,6 @@ jobs:
           --notes "Automatically generated release" \
           --draft=false \
           --prerelease=false \
-          ../publish.zip
+          ./publish.zip
       env:
         GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
