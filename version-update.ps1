@@ -57,6 +57,5 @@ git add .
 git commit -m "Update package.json for release"
 
 # Delete the 'release' branch locally
-git branch -D release
 
 Write-Host "Files copied, version updated, and all tags pushed successfully. Release branch deleted locally and publish directory removed."
