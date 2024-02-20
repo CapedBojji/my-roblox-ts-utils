@@ -32,11 +32,18 @@ Get-ChildItem -Path . | Where-Object { $_.Name -notmatch "^(publish|.git)$" } | 
 # Increment version, this will automatically create a new tag
 npm version $versionType --force -m "Upgrade to %s for release"
 
+# Commit the changes
+git add .
+git commit -m "Prepare for release"
+
 # Push all tags to the remote repository
 git push origin --tags
 
 # Checkout to the 'main' branch
 git checkout main
+
+# Discard the changes in the 'release' branch
+
 
 # Delete the 'release' branch locally
 git branch -D release
