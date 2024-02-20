@@ -3,6 +3,9 @@ param(
     [string]$versionType # should be 'patch', 'minor', or 'major'
 )
 
+# Store the current branch name
+$currentBranch = git rev-parse --abbrev-ref HEAD
+
 # Increment version, this will automatically create a new tag
 npm version $versionType --force -m "Upgrade to %s for release"
 
@@ -43,16 +46,10 @@ git commit -m "Prepare for release"
 # Push all tags to the remote repository
 git push origin --tags
 
-# Checkout to the 'main' branch
-git checkout main
-
-# Discard the changes in the 'release' branch
-
+# Checkout to the previous branch
+git checkout $currentBranch
 
 # Delete the 'release' branch locally
 git branch -D release
-
-# Cleanup: Delete the publish directory
-Remove-Item publish -Recurse -Force
 
 Write-Host "Files copied, version updated, and all tags pushed successfully. Release branch deleted locally and publish directory removed."
