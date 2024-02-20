@@ -34,7 +34,7 @@ Get-ChildItem -Path src/*.d.ts -Recurse | ForEach-Object {
 Get-ChildItem -Path . | Where-Object { $_.Name -notmatch "^(publish|.git|package.json)$" } | Remove-Item -Force -Recurse
 
 # Increment version, this will automatically create a new tag
-npm version $versionType --force -m "Upgrade to %s for release"
+npm version $versionType  "Upgrade to %s for release"
 
 # Move files from 'publish/src' to the root directory
 Get-ChildItem -Path $publishSrcDir/* | ForEach-Object {
