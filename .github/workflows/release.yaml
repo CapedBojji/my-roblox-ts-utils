@@ -13,6 +13,11 @@ jobs:
       with:
         fetch-depth: 0 # Ensures the entire history and tags are fetched
 
+    - name: Configure Git
+      run: |
+        git config --global user.email "you@example.com"
+        git config --global user.name "Your Name"
+
     - name: Setup Environment
       run: |
         mkdir -p publish
