@@ -28,7 +28,8 @@ jobs:
 
     - name: Create Release Branch
       run: |
-        git checkout --orphan release
+        git pull origin release
+        git checkout release
         git rm -rf .
         mv publish/* .
         rmdir publish
