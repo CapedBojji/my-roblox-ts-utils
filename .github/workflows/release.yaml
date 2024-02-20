@@ -3,7 +3,7 @@ name: Prepare and Push Release Branch
 on:
   push:
     tags:
-      - 'v.*'
+      - '*'
 
 jobs:
   prepare-and-release:
