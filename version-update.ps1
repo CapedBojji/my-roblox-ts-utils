@@ -47,12 +47,13 @@ Get-ChildItem -Path publish/src/* | ForEach-Object {
 # Remove the 'publish' directory
 Remove-Item -Path publish -Force -Recurse
 
-# Increment version, this will automatically create a new tag
-npm version $versionType  "Upgrade to %s for release"
-
 # Commit the changes
 git add .
 git commit -m "Version updated to $versionType"
+
+# Increment version, this will automatically create a new tag
+npm version $versionType  "Upgrade to %s for release"
+
 
 # Push all tags to the remote repository
 git push --tags
