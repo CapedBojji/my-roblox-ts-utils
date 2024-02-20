@@ -1,40 +1,42 @@
 param(
     [Parameter(Mandatory=$true)]
-    [string]$versionType, # should be 'patch', 'minor', or 'major'
+    [string]$versionType # should be 'patch', 'minor', or 'major'
 )
 
-# Navigate to the project root directory if the script is not there
-# Set-Location "path\to\your\project"
+# Assuming the script is executed from the project root directory
 
-# Checkout or create the release branch
-git checkout release -B
-
-# Ensure publish/src directory exists
-$publishDir = "publish/src"
-if (-Not (Test-Path $publishDir)) {
-    New-Item -ItemType Directory -Force -Path $publishDir
+# Create the publish/src directory if it doesn't exist
+$publishSrcDir = "publish/src"
+if (-Not (Test-Path $publishSrcDir)) {
+    New-Item -ItemType Directory -Force -Path $publishSrcDir
 }
 
-# Move everything to publish/src, this might need adjustments based on your project structure
-Get-ChildItem -Path . -Exclude publish | ForEach-Object {
-    Move-Item $_.FullName $publishDir -Force
+# Copy files from 'out' to 'publish/src'
+Get-ChildItem -Path out/* | ForEach-Object {
+    Copy-Item $_.FullName $publishSrcDir -Force
 }
 
-# Clean up the root directory, except for the 'publish' directory
-Get-ChildItem -Path . -Exclude publish | ForEach-Object {
-    Remove-Item $_.FullName -Force -Recurse
+# Copy all .d.ts files from 'src' to 'publish/src'
+Get-ChildItem -Path src/*.d.ts -Recurse | ForEach-Object {
+    Copy-Item $_.FullName $publishSrcDir -Force
 }
 
-# Increment version and create a tag
+# Copy package.json to 'publish'
+Copy-Item package.json publish/ -Force
+
+# Checkout to a new or existing 'release' branch
+git checkout -B release
+
+# Increment version, this will automatically create a new tag
 npm version $versionType --force -m "Upgrade to %s for release"
 
-# Push the new tag
-git push --tags
+# Push all tags to the remote repository
+git push origin --tags
 
-# Checkout the main branch
-git checkout main
-
-# Delete the release branch locally
+# Delete the 'release' branch locally
 git branch -D release
 
-Write-Host "Version updated, tagged, and pushed successfully. Release branch deleted."
+# Cleanup: Delete the publish directory
+Remove-Item publish -Recurse -Force
+
+Write-Host "Files copied, version updated, and all tags pushed successfully. Release branch deleted locally and publish directory removed."
