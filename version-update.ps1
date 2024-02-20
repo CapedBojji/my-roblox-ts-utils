@@ -36,14 +36,19 @@ Get-ChildItem -Path . | Where-Object { $_.Name -notmatch "^(publish|.git|package
 # Increment version, this will automatically create a new tag
 npm version $versionType  "Upgrade to %s for release"
 
-# Move files from 'publish/src' to the root directory
-Get-ChildItem -Path $publishSrcDir/* | ForEach-Object {
-    Move-Item $_.FullName . -Force
+# Create src directory in root
+$srcDir = "src"
+if (-Not (Test-Path $srcDir)) {
+    New-Item -ItemType Directory -Force -Path $srcDir
 }
 
-# Commit the changes
-git add .
-git commit -m "Prepare for release"
+# Copy files from 'publish/src' to 'src'
+Get-ChildItem -Path publish/src/* | ForEach-Object {
+    Copy-Item $_.FullName $srcDir -Force
+}
+
+# Remove the 'publish' directory
+Remove-Item -Path publish -Force -Recurse
 
 # Push all tags to the remote repository
 git push --tags
