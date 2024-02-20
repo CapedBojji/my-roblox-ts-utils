@@ -54,9 +54,21 @@ git commit -m "Version updated to $versionType"
 # Increment version, this will automatically create a new tag
 npm version $versionType  
 
-
 # Push all tags to the remote repository
 git push --tags
+
+# Checkout to the previous branch
+git checkout $currentBranch
+
+# Copy the package.json file from the 'release' branch to the root directory
+git checkout release -- package.json
+
+# Remove the 'release' branch
+git branch -D release
+
+# Commit the changes
+git add .
+git commit -m "Post release commit"
 
 
 Write-Host "Files copied, version updated, and all tags pushed successfully. Release branch deleted locally and publish directory removed."
