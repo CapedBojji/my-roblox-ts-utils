@@ -4,6 +4,8 @@ param(
 )
 
 # Assuming the script is executed from the project root directory
+# Checkout to a new or existing 'release' branch
+git checkout -B release
 
 # Create the publish/src directory if it doesn't exist
 $publishSrcDir = "publish/src"
@@ -24,14 +26,17 @@ Get-ChildItem -Path src/*.d.ts -Recurse | ForEach-Object {
 # Copy package.json to 'publish'
 Copy-Item package.json publish/ -Force
 
-# Checkout to a new or existing 'release' branch
-git checkout -B release
+# Cleanup: Remove all items except 'publish' and '.git'
+Get-ChildItem -Path . | Where-Object { $_.Name -notmatch "^(publish|.git)$" } | Remove-Item -Force -Recurse
 
 # Increment version, this will automatically create a new tag
 npm version $versionType --force -m "Upgrade to %s for release"
 
 # Push all tags to the remote repository
 git push origin --tags
+
+# Checkout to the 'main' branch
+git checkout main
 
 # Delete the 'release' branch locally
 git branch -D release
