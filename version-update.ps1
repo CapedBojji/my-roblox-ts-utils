@@ -8,7 +8,7 @@ $currentBranch = git rev-parse --abbrev-ref HEAD
 
 # Commit the changes
 git add .
-git commit -m "Upgrade to $versionType for release"
+git commit -m "Pre release commit"
 
 # Assuming the script is executed from the project root directory
 # Checkout to a new or existing 'release' branch
@@ -36,15 +36,17 @@ Get-ChildItem -Path . | Where-Object { $_.Name -notmatch "^(publish|.git|package
 # Increment version, this will automatically create a new tag
 npm version $versionType --force -m "Upgrade to %s for release"
 
-# Copy package.json to 'publish'
-Copy-Item package.json publish/ -Force
+# Move files from 'publish/src' to the root directory
+Get-ChildItem -Path $publishSrcDir/* | ForEach-Object {
+    Move-Item $_.FullName . -Force
+}
 
 # Commit the changes
 git add .
 git commit -m "Prepare for release"
 
 # Push all tags to the remote repository
-git push origin --tags
+git push --tags
 
 # Checkout to the previous branch
 git checkout $currentBranch
@@ -54,7 +56,7 @@ git checkout release -- package.json
 
 # Commit the changes
 git add .
-git commit -m "Update package.json for release"
+git commit -m "Finalize release commit"
 
 # Delete the 'release' branch locally
 
