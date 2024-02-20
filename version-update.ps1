@@ -33,9 +33,6 @@ Get-ChildItem -Path src/*.d.ts -Recurse | ForEach-Object {
 # Cleanup: Remove all items except 'publish' and '.git'
 Get-ChildItem -Path . | Where-Object { $_.Name -notmatch "^(publish|.git|package.json)$" } | Remove-Item -Force -Recurse
 
-# Increment version, this will automatically create a new tag
-npm version $versionType  "Upgrade to %s for release"
-
 # Create src directory in root
 $srcDir = "src"
 if (-Not (Test-Path $srcDir)) {
@@ -50,19 +47,15 @@ Get-ChildItem -Path publish/src/* | ForEach-Object {
 # Remove the 'publish' directory
 Remove-Item -Path publish -Force -Recurse
 
-# Push all tags to the remote repository
-git push --tags
-
-# Checkout to the previous branch
-git checkout $currentBranch
-
-# Copy the package.json file to this branch
-git checkout release -- package.json
+# Increment version, this will automatically create a new tag
+npm version $versionType  "Upgrade to %s for release"
 
 # Commit the changes
 git add .
-git commit -m "Finalize release commit"
+git commit -m "Version updated to $versionType"
 
-# Delete the 'release' branch locally
+# Push all tags to the remote repository
+git push --tags
+
 
 Write-Host "Files copied, version updated, and all tags pushed successfully. Release branch deleted locally and publish directory removed."
