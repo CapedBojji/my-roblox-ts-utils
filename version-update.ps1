@@ -51,6 +51,10 @@ Remove-Item -Path publish -Force -Recurse
 git add .
 git commit -m "Version updated to $versionType"
 
+# Remove the "latest" tag if it exists
+git tag -d latest
+git push --delete origin latest
+
 # Increment version, this will automatically create a new tag
 npm version $versionType  
 
