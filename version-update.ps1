@@ -54,6 +54,9 @@ git commit -m "Version updated to $versionType"
 # Increment version, this will automatically create a new tag
 npm version $versionType  
 
+# Create a tag called latest if it doesn't exist
+git tag -f latest
+
 # Push all tags to the remote repository
 git push --tags
 
