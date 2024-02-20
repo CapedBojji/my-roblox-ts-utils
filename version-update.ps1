@@ -23,14 +23,14 @@ Get-ChildItem -Path src/*.d.ts -Recurse | ForEach-Object {
     Copy-Item $_.FullName $publishSrcDir -Force
 }
 
+# Increment version, this will automatically create a new tag
+npm version $versionType --force -m "Upgrade to %s for release"
+
 # Copy package.json to 'publish'
 Copy-Item package.json publish/ -Force
 
 # Cleanup: Remove all items except 'publish' and '.git'
 Get-ChildItem -Path . | Where-Object { $_.Name -notmatch "^(publish|.git)$" } | Remove-Item -Force -Recurse
-
-# Increment version, this will automatically create a new tag
-npm version $versionType --force -m "Upgrade to %s for release"
 
 # Commit the changes
 git add .
