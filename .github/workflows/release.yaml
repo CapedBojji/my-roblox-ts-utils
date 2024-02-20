@@ -16,6 +16,12 @@ jobs:
       with:
         node-version: '14'
 
+    - name: Install Dependencies
+      run: npm install
+
+    - name: Build Project
+      run: npm run build
+
     - name: Prepare Publish Directory
       run: |
         mkdir -p publish/src
@@ -24,7 +30,10 @@ jobs:
         cp package.json publish/
 
     - name: Archive Publish Directory
-      run: zip -r publish.zip publish
+      run: |
+        cd publish
+        zip -r ../publish.zip ./*
+        cd ..
 
     - name: Create GitHub Release
       run: |
@@ -33,6 +42,6 @@ jobs:
           --notes "Automatically generated release" \
           --draft=false \
           --prerelease=false \
-          ./publish.zip
+          ../publish.zip
       env:
         GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
