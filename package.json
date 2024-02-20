@@ -6,6 +6,7 @@
   "files": [
     "src"
   ],
+  "typings": "src/index.d.ts",
   "scripts": {},
   "keywords": [],
   "author": "CapedBojji",
