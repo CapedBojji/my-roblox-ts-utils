@@ -6,7 +6,6 @@ param(
 # Store the current branch name
 $currentBranch = git rev-parse --abbrev-ref HEAD
 
-
 # Commit the changes
 git add .
 git commit -m "Upgrade to $versionType for release"
@@ -49,6 +48,13 @@ git push origin --tags
 
 # Checkout to the previous branch
 git checkout $currentBranch
+
+# Copy the package.json file to this branch
+git checkout release -- package.json
+
+# Commit the changes
+git add .
+git commit -m "Update package.json for release"
 
 # Delete the 'release' branch locally
 git branch -D release
