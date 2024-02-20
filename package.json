@@ -1,11 +1,12 @@
 {
   "name": "caped-bojji-roblox-utils",
-  "version": "1.0.0",
+  "version": "0.0.3",
   "description": "My utils package for Roblox TS",
   "main": "src/init.lua",
   "files": [
     "src"
   ],
+  "typings": "src/index.d.ts",
   "scripts": {},
   "keywords": [],
   "author": "CapedBojji",
@@ -21,11 +22,7 @@
     "eslint-plugin-roblox-ts": "^0.0.36",
     "prettier": "^3.2.5",
     "roblox-ts": "^2.3.0",
-    "typescript": "^5.3.3"
-  },
-  "dependencies": {
-    "@rbxts/testez": "^0.4.2-ts.0",
-    "@rbxts/compiler-types": "^2.3.0-types.0",
-    "@rbxts/types": "^1.0.751"
+    "typescript": "^5.3.3",
+    "@rbxts/testez": "^0.4.2-ts.0"
   }
 }
