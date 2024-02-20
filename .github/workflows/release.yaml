@@ -3,33 +3,28 @@ name: Prepare and Push Release Branch
 on:
   push:
     tags:
-      - 'v*'
+      - '*'
 
 jobs:
-  push-release-branch:
+  prepare-and-release:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
       with:
-        fetch-depth: 0 # Ensures the entire history is fetched
+        fetch-depth: 0 # Ensures the entire history and tags are fetched
 
-    - name: Prepare Release Branch
+    - name: Setup Environment
       run: |
-        # Assuming 'publish' directory is already prepared in your repository
-        # Create a new branch named 'release' from the current state
-        git checkout -b release
-        
-        # Clear current branch contents except the '.git' directory
-        find . -mindepth 1 -maxdepth 1 ! -name ".git" ! -name "publish" -exec rm -rf {} \;
-        
-        # Move the contents of 'publish' to the root directory
+        mkdir -p publish
+        if [ -d out ]; then mv out/* publish/; fi
+        find src -name "*.d.ts" -exec mv {} publish/ \;
+
+    - name: Create Release Branch
+      run: |
+        git checkout --orphan release
+        git rm -rf .
         mv publish/* .
-        # Remove the now empty 'publish' directory
         rmdir publish
-        
-        # Add all changes to git
         git add .
-        # Commit the changes
-        git commit -m "Prepare release branch with publish contents"
-        # Push the 'release' branch to the remote repository
-        git push -u origin release
+        git commit -m "Prepare release branch with selected contents"
+        git push origin release
