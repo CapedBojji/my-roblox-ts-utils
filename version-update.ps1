@@ -52,7 +52,7 @@ git add .
 git commit -m "Version updated to $versionType"
 
 # Increment version, this will automatically create a new tag
-npm version $versionType  "Upgrade to %s for release"
+npm version $versionType  
 
 
 # Push all tags to the remote repository
