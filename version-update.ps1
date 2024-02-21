@@ -3,6 +3,9 @@ param(
     [string]$versionType # should be 'patch', 'minor', or 'major'
 )
 
+# Compile the TypeScript files
+npm run build
+
 # Store the current branch name
 $currentBranch = git rev-parse --abbrev-ref HEAD
 
