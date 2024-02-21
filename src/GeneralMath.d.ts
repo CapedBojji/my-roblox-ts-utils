@@ -7,7 +7,7 @@ interface IGeneralMath {
     gentroid: (points: IPoint2D[]) => IPoint2D;
     getAngle_2Points: (p1: IPoint2D, p2: IPoint2D) => number;
     getDistance_2Points: (p1: IPoint2D, p2: IPoint2D) => number;
-    gotatePoint: (x: number, y: number, angle: number) => [number, number];
+    rotatePoint: (x: number, y: number, angle: number) => [number, number];
 }
 
 declare const GeneralMath: IGeneralMath;
