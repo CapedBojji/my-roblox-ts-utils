@@ -22,8 +22,8 @@ This package provides the following utility classes:
 - `Segment`: Utility class for line segment operations
 - `Point2D`: Extension of the Vector2 class
 - `Grid`: Utility class for Grid operations
-- `Random`: A Utility class for generating random values, provides functions like 
-  - **Random:At(t)**: Which will return the nth random number, from the seed. 
+- `RandomSynced`: A Utility class for generating random values, provides functions like 
+  - **Random:numberAt(t)**: Which will return the nth random number, from the seed. 
   Basically, if you created a new random object and called *getNext* t times what would it return
 
 ## Utility Modules
