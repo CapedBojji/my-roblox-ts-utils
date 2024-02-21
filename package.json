@@ -1,6 +1,6 @@
 {
   "name": "caped-bojji-roblox-utils",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "My utils package for Roblox TS",
   "main": "src/init.lua",
   "files": [
