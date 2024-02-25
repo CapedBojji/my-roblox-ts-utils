@@ -2,6 +2,7 @@ interface Point2D {
     equals(point: Point2D): boolean;
     getX(): number;
     getY(): number;
+    toVector2(): Vector2;
 }
 
 interface IPoint2DConstructor {

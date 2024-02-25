@@ -20,6 +20,10 @@ class Point2D {
 	getY(): number {
 		return this.point.Y;
 	}
+
+	toVector2(): Vector2 {
+		return this.point;
+	}
 }
 
 export default Point2D;
