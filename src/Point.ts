@@ -24,6 +24,14 @@ class Point2D {
 	toVector2(): Vector2 {
 		return this.point;
 	}
+
+	add(point: Point2D): Point2D {
+		return new Point2D(this.X + point.X, this.Y + point.Y);
+	}
+
+	subtract(point: Point2D): Point2D {
+		return new Point2D(this.X - point.X, this.Y - point.Y);
+	}
 }
 
 export default Point2D;

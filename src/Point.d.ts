@@ -3,6 +3,8 @@ interface Point2D {
     getX(): number;
     getY(): number;
     toVector2(): Vector2;
+    add(point: Point2D): Point2D;
+    subtract(point: Point2D): Point2D;
 }
 
 interface IPoint2DConstructor {
