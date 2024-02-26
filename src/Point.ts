@@ -32,6 +32,10 @@ class Point2D {
 	subtract(point: Point2D): Point2D {
 		return new Point2D(this.X - point.X, this.Y - point.Y);
 	}
+
+	dividedBy(value: number): Point2D {
+		return new Point2D(this.X / value, this.Y / value);
+	}
 }
 
 export default Point2D;
